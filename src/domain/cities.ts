@@ -36,7 +36,7 @@ export const cities: Array<City> = [
         area: "Villers-lès-Nancy"
     },
     {
-        id: "Metz",
+        id: "metz",
         name: "Metz",
         academy: "nancy.metz",
         area: "Metz"

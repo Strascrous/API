@@ -1,6 +1,6 @@
-import { readFileSync } from "fs";
+import type { RawData } from "./models.js";
 
-export async function fetchCROUS(academy: string) {
+export async function fetchCROUS(academy: string): Promise<RawData> {
     let req = await fetch(`http://webservices-v2.crous-mobile.fr/feed/${academy}/externe/crous-${academy}.json`)
 
     let raw = await req.text();
