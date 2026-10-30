@@ -45,36 +45,23 @@ restaurants.get("/", async (c): Promise<Response> => {
 
 restaurants.get("/:id", async (c): Promise<Response> => {
     const id = c.req.param("id");
-    const city = c.req.query("city");
-    if (!city || !citiesIds.includes(city)) {
-        return c.json({
-            ok: false,
-            message: "Ville inconnue."
-        }, 404);
-    }
 
-    const restaurantId = Number(id);
-    if (!Number.isSafeInteger(restaurantId)) return c.json({
-        ok: false,
-        message: "L'identifiant est trop grand."
-    }, 400);
-
-    let cache = await getMenuInCache(city, restaurantId);
+    let cache = await getMenuInCache(id);
     if (cache != null) return c.json({
         ok: true,
-        message: `Voici la liste des menu du restaurant n°${restaurantId}`,
+        message: `Voici la liste des menus de ce restaurant`,
         data: {
             menus: cache
         }
     });
 
     try {
-        let menus = await fetchMenuList(city, restaurantId);
-        saveMenuInCache(city, restaurantId, menus)
+        let menus = await fetchMenuList(id);
+        saveMenuInCache(id, menus)
 
         return c.json({
             ok: true,
-            message: `Voici la liste des menu du restaurant n°${restaurantId}`,
+            message: `Voici la liste des menus de ce restaurant`,
             data: {
                 menus
             }

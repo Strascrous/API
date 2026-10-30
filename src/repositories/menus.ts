@@ -4,10 +4,10 @@ import { valkey, VALKEY_APP_ID } from "../infrastructure/redis.js";
 
 const MENU_TTL_SECONDS = 60 * 60;
 const MENU_TTL_SECONDS_IF_EMPTY = 5 * 60;
-const _key = (city: CityId, restaurant: number) => `${VALKEY_APP_ID}:menus:${city}:${restaurant}`;
+const _key = (id: string) => `${VALKEY_APP_ID}:menus:${id}`;
 
-export async function getMenuInCache(city: CityId, restaurant: number): Promise<Array<Menu> | null> {
-    let key = _key(city, restaurant);
+export async function getMenuInCache(id: string): Promise<Array<Menu> | null> {
+    let key = _key(id);
     try {
         let raw = await valkey.get(key);
         if (raw === null) return null;
@@ -20,8 +20,8 @@ export async function getMenuInCache(city: CityId, restaurant: number): Promise<
     }
 }
 
-export async function saveMenuInCache(city: CityId, restaurant: number, data: Array<Menu>) {
-    let key = _key(city, restaurant);
+export async function saveMenuInCache(id: string, data: Array<Menu>) {
+    let key = _key(id);
 
     let ex = MENU_TTL_SECONDS;
     if (data.length === 0) ex = MENU_TTL_SECONDS_IF_EMPTY;

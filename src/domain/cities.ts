@@ -61,6 +61,7 @@ export const cities: Array<City> = [
     }
 ] as const;
 
+export const validAcademies = new Set(cities.map((c) => c.academy));
 export const citiesIds = cities.map(c => c.id);
 
 export interface City {

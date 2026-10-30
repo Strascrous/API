@@ -90,6 +90,8 @@ export interface Restaurant {
     type: RestaurantType;
 }
 
+export type RestaurantAPI = Omit<Restaurant, "id"> & { id: string };
+
 export interface Menu {
     date: string;
     noon: Array<MenuItem>;

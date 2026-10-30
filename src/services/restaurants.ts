@@ -1,24 +1,30 @@
-import type { Restaurant } from "../crous/models.js";
+import type { Menu, Restaurant, RestaurantAPI } from "../crous/models.js";
 import { fetchMenu, fetchRestaurants } from "../crous/parser.js";
-import { findCityById, type CityId } from "../domain/cities.js";
+import { findCityById, validAcademies, type CityId } from "../domain/cities.js";
+import { decodeRestaurantId, encodeRestaurantId } from "../helpers/ids.js";
 
-export async function fetchRestaurantsList(city: CityId): Promise<Array<Restaurant>> {
+export async function fetchRestaurantsList(city: CityId): Promise<Array<RestaurantAPI>> {
     let cityInfo = findCityById(city);
     if (!cityInfo) return [];
 
-    return await fetchRestaurants({
+    let list = await fetchRestaurants({
         academy: cityInfo.academy,
         area: cityInfo.area
-    })
+    });
+
+    return list.map((r): RestaurantAPI => ({
+        ...r,
+        id: encodeRestaurantId(r.id, cityInfo.academy)
+    }));
 }
 
-export async function fetchMenuList(city: CityId, restaurant: number) {
-    let cityInfo = findCityById(city);
-    if (!cityInfo) return [];
+export async function fetchMenuList(id: string): Promise<Array<Menu>> {
+    let data = decodeRestaurantId(id);
+    if (data === null || !validAcademies.has(data.academy)) return [];
 
     return await fetchMenu({
-        academy: cityInfo.academy,
-        restaurant: restaurant
+        academy: data.academy,
+        restaurant: data.restaurantId
     });
 }
 
