@@ -60,8 +60,24 @@ export interface RawRestaurant {
     menus: Array<RawRestaurantMenu>;
 }
 
-export interface RawData {
+export interface RawMobileData {
      restaurants: Array<RawRestaurant>;
+}
+
+export interface RawPlace {
+    libelle: string;
+    repas: number;
+    jauge: number;
+    restant: number;
+    pourcentageRestant: number;
+    couleur: string;
+    depassement: boolean;
+}
+
+export interface RawStatsData {
+    majLe: string;
+    donneesAJour: boolean;
+    lieux: Array<RawPlace>;
 }
 
  /**********************
@@ -83,4 +99,11 @@ export interface Menu {
 export interface MenuItem {
     title: string;
     elements: Array<string>;
+}
+
+export interface Stats {
+    updatedAt: string;
+    meals: number;
+    max: number;
+    percent: number;
 }

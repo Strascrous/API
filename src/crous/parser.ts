@@ -1,12 +1,12 @@
-import { fetchCROUS } from "./client.js"
-import type { Menu, MenuItem, Restaurant, RestaurantType } from "./models.js";
+import { fetchCROUSMobile, fetchCROUSStats } from "./client.js"
+import type { Menu, MenuItem, Restaurant, RestaurantType, Stats } from "./models.js";
 
 export async function fetchRestaurants(options: {
     academy: string,
     area: string
 }) {
     const restaurants: Array<Restaurant> = [];
-    let raw = await fetchCROUS(options.academy);
+    let raw = await fetchCROUSMobile(options.academy);
 
     for (const r of raw.restaurants) {
         let _type: RestaurantType = "unknown";
@@ -35,7 +35,7 @@ export async function fetchMenu(options: {
     academy: string;
     restaurant: number;
 }): Promise<Array<Menu>> {
-    let raw = await fetchCROUS(options.academy);
+    let raw = await fetchCROUSMobile(options.academy);
 
     const menus: Array<Menu> = [];
     let restaurant = raw.restaurants.find((r: { id: number; }) => r.id === options.restaurant);
@@ -79,4 +79,15 @@ export async function fetchMenu(options: {
     }
 
     return menus;
+}
+
+export async function fetchStats(id: string): Promise<Stats> {
+    let raw = await fetchCROUSStats(id);
+
+    return {
+        updatedAt: raw.majLe,
+        meals: raw.lieux[0].repas,
+        max: raw.lieux[0].jauge,
+        percent: raw.lieux[0].pourcentageRestant
+    }
 }

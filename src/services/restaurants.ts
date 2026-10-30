@@ -21,3 +21,5 @@ export async function fetchMenuList(city: CityId, restaurant: number) {
         restaurant: restaurant
     });
 }
+
+// TODO: statistiques (on sait même pas si ça va revenir)
