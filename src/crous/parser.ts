@@ -3,7 +3,7 @@ import type { Menu, MenuItem, Restaurant, RestaurantType, Stats } from "./models
 
 export async function fetchRestaurants(options: {
     academy: string,
-    area: string
+    areas: Array<string>
 }) {
     const restaurants: Array<Restaurant> = [];
     let raw = await fetchCROUSMobile(options.academy);
@@ -19,11 +19,11 @@ export async function fetchRestaurants(options: {
                 break;
         }
 
-        if (r.area !== options.area || _type === "unknown") continue;
+        if (!options.areas.includes(r.area) || _type === "unknown") continue;
 
         restaurants.push({
             id: r.id,
-            title: r.title,
+            title: r.title.trim(),
             type: _type
         });
     }
@@ -63,17 +63,21 @@ export async function fetchMenu(options: {
 
             for (const f of meal.foodcategory) {
                 let item: MenuItem = {
-                    title: f.name,
+                    title: f.name.trim(),
                     elements: []
                 }
 
+                if (item.title.toLowerCase() === "fermeture") continue;
+
                 for (const d of f.dishes) {
-                    item.elements.push(d.name);
+                    item.elements.push(d.name.trim());
                 }
 
                 menu[key].push(item);
             }
         }
+
+        if (menu.noon.length === 0 && menu.evening.length === 0) continue;
 
         menus.push(menu);
     }

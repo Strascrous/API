@@ -9,7 +9,7 @@ export async function fetchRestaurantsList(city: CityId): Promise<Array<Restaura
 
     let list = await fetchRestaurants({
         academy: cityInfo.academy,
-        area: cityInfo.area
+        areas: cityInfo.areas
     });
 
     return list.map((r): RestaurantAPI => ({
