@@ -3,14 +3,16 @@ import type { Menu, MenuItem, Restaurant, RestaurantType, Stats } from "./models
 
 export async function fetchRestaurants(options: {
     academy: string,
-    areas: Array<string>
+    areas: Array<string>,
+    exactCity?: string,
+    exactCities?: Array<string>
 }) {
     const restaurants: Array<Restaurant> = [];
     let raw = await fetchCROUSMobile(options.academy);
 
     for (const r of raw.restaurants) {
         let _type: RestaurantType = "unknown";
-        switch (r.type.toLowerCase()) {
+        switch (r.type.toLowerCase().trim().split(" ", 1)[0]) {
             case "restaurant":
                 _type = "restaurant";
                 break;
@@ -19,7 +21,10 @@ export async function fetchRestaurants(options: {
                 break;
         }
 
-        if (!options.areas.includes(r.area) || _type === "unknown") continue;
+        r.adresse = r.adresse.trim().toLowerCase();
+        if (!options.areas.includes(r.area.trim()) || _type === "unknown") continue;
+        if (options.exactCities && !options.exactCities.some(city => r.adresse.includes(city.toLowerCase()))) continue;
+        if (options.exactCity && !r.adresse.includes(options.exactCity.toLowerCase())) continue;
 
         restaurants.push({
             id: r.id,
