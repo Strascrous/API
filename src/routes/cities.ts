@@ -1,6 +1,6 @@
 import { Hono } from "hono";
 import { fetchRestaurantsList } from "../services/restaurants.js";
-import { cities } from "../domain/cities.js";
+import { cities } from "@strascrous/data";
 
 const citiesRoutes = new Hono();
 

@@ -1,5 +1,5 @@
 import type { Menu, Restaurant, RestaurantAPI } from "../crous/models.js";
-import type { CityId } from "../domain/cities.js";
+import type { CityId } from "@strascrous/data";
 import { valkey, VALKEY_APP_ID } from "../infrastructure/redis.js";
 
 const RESTAURANTS_TTL_SECONDS = 7 * 24 * 60 * 60;

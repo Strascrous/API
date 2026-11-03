@@ -1,5 +1,5 @@
 import { Hono } from "hono";
-import { citiesIds } from "../domain/cities.js";
+import { citiesIds } from "@strascrous/data";
 import { fetchMenuList, fetchRestaurantsList } from "../services/restaurants.js";
 import { getMenuInCache, saveMenuInCache } from "../repositories/menus.js";
 import { getRestaurantsInCache, saveRestaurantsInCache } from "../repositories/restaurants.js";

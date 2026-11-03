@@ -1,6 +1,6 @@
 import type { Menu, Restaurant, RestaurantAPI } from "../crous/models.js";
 import { fetchMenu, fetchRestaurants } from "../crous/parser.js";
-import { findCityById, validAcademies, type CityId } from "../domain/cities.js";
+import { findCityById, validAcademies, type CityId } from "@strascrous/data";
 import { decodeRestaurantId, encodeRestaurantId } from "../helpers/ids.js";
 
 export async function fetchRestaurantsList(city: CityId): Promise<Array<RestaurantAPI>> {
@@ -10,7 +10,8 @@ export async function fetchRestaurantsList(city: CityId): Promise<Array<Restaura
     let list = await fetchRestaurants({
         academy: cityInfo.academy,
         areas: cityInfo.areas,
-        exactCities: cityInfo.exactCities
+        exactCities: cityInfo.exactCities,
+        exactCity: cityInfo.exactCity
     });
 
     return list.map((r): RestaurantAPI => ({
