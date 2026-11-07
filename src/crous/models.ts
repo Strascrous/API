@@ -87,10 +87,25 @@ export interface RawStatsData {
 export interface Restaurant {
     id: number;
     title: string;
+    description: string;
+    details: RestaurantDetails;
     type: RestaurantType;
 }
 
 export type RestaurantAPI = Omit<Restaurant, "id"> & { id: string };
+
+export interface RestaurantDetails {
+    hours: string;
+    address: string;
+    access: string;
+    payments: Array<Payment>;
+    additional_payments: Array<string>;
+
+    wifi: boolean;
+    pmr: boolean;
+}
+
+export type Payment = "izly" | "cb" | "espece" | "moneo";
 
 export interface Menu {
     date: string;
