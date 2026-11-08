@@ -51,5 +51,17 @@ node --env-file=.env dist/index.js
 | `/restaurants?city=<cityId>` | Restaurants d’une ville |
 | `/restaurants/:id` | Menus d’un restaurant |
 
+## Organisation du projet
+```text
+src/
+├── index.ts                  # Démarrage du serveur
+├── crous/                    # Données CROUS
+├── helpers/                  # Utilitaires
+├── infrastructure/           # Connexion à Valkey
+├── repositories/             # Gestion du cache
+├── routes/                   # Routes HTTP
+└── services/                 # Logique métier
+```
+
 ## Licence
 Ce projet est sous [licence MIT](LICENSE).
