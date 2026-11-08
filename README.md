@@ -44,9 +44,6 @@ node --env-file=.env dist/index.js
 | `VALKEY_APP_ID` | Préfixe des clés de cache de l’application | `strascrous-api` |
 
 ## API
-
-Toutes les routes utilisent `GET` et renvoient du JSON, sans authentification.
-
 | Route | Description |
 | --- | --- |
 | `/` | État du serveur HTTP |
