@@ -1,6 +1,6 @@
 # Strascrous API
 
-API TypeScript pour consulter les restaurants, cafétérias et menus CROUS. Elle récupère les données de CROUS Mobile et les met en cache.
+API pour consulter les restaurants, cafétérias et menus CROUS. Elle récupère les données de CROUS Mobile et les met en cache.
 
 ## Prérequis
 - Node.js 22+ recommandé 
