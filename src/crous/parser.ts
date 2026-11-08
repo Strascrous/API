@@ -60,8 +60,11 @@ export async function fetchRestaurants(options: {
             type: _type,
 
             details: {
-                hours: decodeHTML(r.operationalhours),
                 address: decodeHTML(r.adresse),
+                lon: r.lon,
+                lat: r.lat,
+
+                hours: decodeHTML(r.operationalhours),
                 access: decodeHTML(r.access),
                 payments: payments,
                 additional_payments: additionalPayments,

@@ -95,8 +95,11 @@ export interface Restaurant {
 export type RestaurantAPI = Omit<Restaurant, "id"> & { id: string };
 
 export interface RestaurantDetails {
-    hours: string;
     address: string;
+    lon: number;
+    lat: number;
+
+    hours: string;
     access: string;
     payments: Array<Payment>;
     additional_payments: Array<string>;
