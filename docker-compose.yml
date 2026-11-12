@@ -1,0 +1,26 @@
+services:
+    api:
+        image: ghcr.io/strascrous/api:latest
+        restart: unless-stopped
+        ports:
+            - "3000:3000"
+        environment:
+            VALKEY_URL: valkey://valkey:6379
+            VALKEY_APP_ID: strascrous
+        depends_on:
+            valkey:
+                condition: service_healthy
+
+    valkey:
+        image: valkey/valkey:8-alpine
+        restart: unless-stopped
+        volumes:
+            - valkey-data:/data
+        healthcheck:
+            test: ["CMD", "valkey-cli", "ping"]
+            interval: 5s
+            timeout: 3s
+            retries: 5
+
+volumes:
+    valkey-data:
